@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE libro [
+<!ELEMENT libro (titulo, autor,año) >
+<!ELEMENT titulo (#PCDATA )>
+<!ELEMENT autor (#PCDATA)>
+<!ELEMENT año (#PCDATA)>
+]>
+<libro>
+    <titulo>Ejemplo de XML</titulo>
+    <autor>Juan Pérez</autor>
+    <año>2024</año>
+</libro>

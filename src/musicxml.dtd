@@ -1,0 +1,107 @@
+<!DOCTYPE score-partwise [
+<!ELEMENT score-partwise (work, identification, defaults, credit, part-list, part)>
+
+<!ELEMENT work (work-title)>
+<!ELEMENT work-title (#PCDATA)>
+
+<!ELEMENT identification (creator, encoding, source)>
+<!ELEMENT creator (#PCDATA)>
+<!ELEMENT encoding (software, encoding-date, supports, source)>
+<!ELEMENT software (#PCDATA)>
+<!ELEMENT encoding-date (#PCDATA)>
+<!ELEMENT supports (EMPTY)>
+<!ELEMENT source (#PCDATA)>
+
+<!ELEMENT defaults (scaling, page-layout, word-font, lyric-font)>
+<!ELEMENT scaling (millimeters, tenths)>
+<!ELEMENT millimeters (#PCDATA)>
+<!ELEMENT tenths (#PCDATA)>
+
+<!ELEMENT page-layout (page-height, page-width, page-margins, page-margins)>
+<!ELEMENT page-height (#PCDATA)>
+<!ELEMENT page-width (#PCDATA)>
+<!ELEMENT page-margins (left-margin, right-margin, top-margin, bottom-margin)>
+<!ELEMENT left-margin (#PCDATA)>
+<!ELEMENT right-margin (#PCDATA)>
+<!ELEMENT top-margin (#PCDATA)>
+<!ELEMENT bottom-margin (#PCDATA)>
+
+<!ELEMENT word-font (EMPTY)>
+<!ELEMENT lyric-font (EMPTY)>
+
+<!ELEMENT credit (credit-type, credit-words)>
+<!ELEMENT credit-type (#PCDATA)>
+<!ELEMENT credit-words (#PCDATA)>
+
+<!ELEMENT part-list (score-part)>
+<!ELEMENT score-part (part-name, score-instrument, midi-device, midi-instrument)>
+<!ELEMENT part-name (#PCDATA)>
+<!ELEMENT score-instrument (instrument-name)>
+<!ELEMENT instrument-name (#PCDATA)>
+<!ELEMENT midi-device (#PCDATA)>
+<!ELEMENT midi-instrument (midi-channel, midi-program, volume, pan)>
+<!ELEMENT midi-channel (#PCDATA)>
+<!ELEMENT midi-program (#PCDATA)>
+<!ELEMENT volume (#PCDATA)>
+<!ELEMENT pan (#PCDATA)>
+
+<!ELEMENT part (measure)>
+
+<!ELEMENT measure (print, attributes, direction, backup, note,barline)>
+
+<!ELEMENT print (system-layout, staff-layout)>
+<!ELEMENT system-layout (system-margins, top-system-distance,system-distance)>
+<!ELEMENT system-margins (left-margin, right-margin)>
+<!ELEMENT top-system-distance (#PCDATA)>
+<!ELEMENT barline (bar-style)>
+<!ELEMENT bar-style (#PCDATA)>
+<!ELEMENT system-distance (#PCDATA)>
+<!ELEMENT staff-layout (staff-distance)>
+<!ELEMENT staff-distance (#PCDATA)>
+
+<!ELEMENT attributes (divisions, key, time, staves, clef)>
+<!ELEMENT divisions (#PCDATA)>
+<!ELEMENT key (fifths)>
+<!ELEMENT fifths (#PCDATA)>
+<!ELEMENT time (beats, beat-type)>
+<!ELEMENT beats (#PCDATA)>
+<!ELEMENT beat-type (#PCDATA)>
+<!ELEMENT staves (#PCDATA)>
+<!ELEMENT clef (sign, line)>
+<!ELEMENT sign (#PCDATA)>
+<!ELEMENT line (#PCDATA)>
+
+<!ELEMENT direction (direction-type, staff, sound)>
+<!ELEMENT direction-type (dynamics , words , wedge)>
+<!ELEMENT dynamics (pp,p,f,mp)>
+<!ELEMENT p (#PCDATA)>
+<!ELEMENT mp (#PCDATA)>
+<!ELEMENT f (#PCDATA)>
+<!ELEMENT pp (#PCDATA)>
+<!ELEMENT words (#PCDATA)>
+<!ELEMENT wedge (EMPTY)>
+<!ELEMENT staff (#PCDATA)>
+<!ELEMENT sound (EMPTY)>
+
+<!ELEMENT note (rest, chord, pitch, duration, voice, type, stem, staff, notations, tie,backup,dot,accidental)>
+<!ELEMENT rest (display-step,display-octave)>
+<!ELEMENT display-step (EMPTY)>
+<!ELEMENT display-octave (EMPTY)>
+<!ELEMENT accidental (EMPTY)>
+<!ELEMENT chord (EMPTY)>
+<!ELEMENT dot (EMPTY)>
+<!ELEMENT pitch (step, octave, alter)>
+<!ELEMENT step (#PCDATA)>
+<!ELEMENT octave (#PCDATA)>
+<!ELEMENT alter (#PCDATA)>
+<!ELEMENT duration (#PCDATA)>
+<!ELEMENT backup (duration)>
+<!ELEMENT voice (#PCDATA)>
+<!ELEMENT type (#PCDATA)>
+<!ELEMENT stem (#PCDATA)>
+<!ELEMENT notations (slur, tied)>
+<!ELEMENT slur (EMPTY)>
+<!ELEMENT tied (EMPTY)>
+<!ELEMENT tie (EMPTY)>
+<!ELEMENT rest (EMPTY)>
+]>

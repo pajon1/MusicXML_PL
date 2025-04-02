@@ -1,0 +1,11 @@
+./musicXML < prueba.xml
+
+./musicXML < score.xml
+
+./musicXML < score2.xml
+
+./musicXML < score3.xml
+
+./musicXML < scoreDTD.xml
+
+./musicXML < score2DTD.xml

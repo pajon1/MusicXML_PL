@@ -1,0 +1,90 @@
+Informe del Proyecto: Parser de MusicXML
+
+Autores: Pablo Pajón Area y Rafael de Almeida Leite
+Introducción
+
+El objetivo de esta práctica es desarrollar un parser para archivos MusicXML que analice una partitura y proporcione al usuario la siguiente información:
+
+    Número total de notas.
+    Número de notas para cada instrumento presente en la partitura.
+    Acordes detectados.
+
+El proyecto está dividido en dos archivos principales:
+
+    musicXML.l: Contiene el analizador léxico.
+    musicXML.y: Contiene el analizador sintáctico.
+
+Descripción del Analizador Léxico (musicXML.l)
+
+El analizador léxico está diseñado para reconocer la sintaxis de XML utilizando expresiones regulares que representan las etiquetas y atributos de XML. A diferencia de la práctica anterior, se ha modificado la forma en que se leen las etiquetas de apertura, permitiendo que solo se lean hasta el nombre de la etiqueta, y opcionalmente se puedan incluir atributos antes del símbolo ">" que indica el cierre de la etiqueta de apertura.
+Manejo de la Estructura del Esquema
+
+Para representar los esquemas, se utiliza una pila de elementos (Elements) que representan los elementos de un DTD. Cada elemento contiene:
+
+    Nombre del elemento.
+    Lista de elementos hijos.
+    Número de hijos que tiene.
+
+Se define un elemento raíz (root) que representa el mapa del esquema. Al inicio, se parsea el esquema para crear el root, y posteriormente, cada vez que se abre o cierra una etiqueta, se utiliza la pila para garantizar que estos elementos siguen el esquema definido.
+Descripción del Analizador Sintáctico (musicXML.y)
+
+El analizador sintáctico se basa en el parser de XML de la práctica anterior, con mejoras para soportar atributos, esquemas y la sintaxis específica de MusicXML.
+Manejo de Etiquetas y Atributos
+
+    Etiquetas de Apertura: Se reconocen mediante el token TAG_OPEN, que contiene el nombre de la etiqueta, una lista de atributos (que puede estar vacía) y un token que representa el fin de la apertura.
+    Atributos: Se procesan dentro de las reglas gramaticales correspondientes, asegurando que el parser pueda manejar correctamente etiquetas con o sin atributos, manteniendo la flexibilidad y robustez del analizador.
+
+Integración del Esquema
+
+Existen reglas que concatenan cada elemento del esquema para construir una cadena que representa todo el esquema. Al final, se llama a la función parse_schema que creará el root del esquema utilizado para comprobar las etiquetas XML durante el análisis.
+Especificidades de MusicXML
+
+Se declaran globalmente varias estructuras y variables:
+
+    Lista de Instrumentos: Utiliza un struct Instrumento que guarda el nombre de los instrumentos que aparecen y el número de notas que tocan.
+    Contador de Notas Global: Para toda la partitura.
+    Base de Acordes: Una lista extensa de acordes reconocidos por el analizador.
+    Variables de Navegación: current_part, total_parts, current_measure y measure_note.
+    Función de Análisis de Acordes: Analiza un grupo de notas y compara con la base de acordes para identificar los acordes encontrados.
+
+Análisis de Notas y Compases
+
+El analizador sintáctico está diseñado para identificar y procesar las notas y los compases presentes en la partitura. Cada vez que se encuentra una etiqueta <note>, se incrementa el contador global de notas y se actualiza el contador de notas para el instrumento correspondiente. Dentro de una nota, la etiqueta <step> captura la letra que representa la nota musical. Estas notas se almacenan temporalmente en una estructura que agrupa las notas por compás.
+
+Al detectar una etiqueta <measure>, se considera el inicio de un nuevo compás. Se reinicia el contador de notas del compás actual y se prepara para almacenar las notas de este compás. Las notas dentro de cada compás se almacenan en una lista de listas (measures), donde cada sublista representa las notas de un compás específico.
+Detección de Acordes
+
+Una vez que todos los compases han sido analizados, la función identificar_acordes procesa cada compás individualmente. Se asume que cada compás contiene un único acorde, lo que simplifica la identificación. Esta asunción es válida para muchas partituras, aunque en casos de acordes múltiples por compás, el analizador podría requerir ajustes adicionales.
+
+La función compara las notas presentes en cada compás con una base predefinida de acordes (base_acordes). Si todas las notas de un acorde están presentes en el compás, se identifica ese acorde específico. Este método permite detectar acordes de manera eficiente, proporcionando una visión clara de la estructura armónica de la partitura.
+Creación de un Schema (DTD) Personalizado
+
+Para asegurar que el parser maneje correctamente las especificidades de MusicXML, se ha creado un schema (DTD) personalizado que define la estructura esperada de las partituras. Este schema está diseñado para capturar únicamente los elementos y atributos relevantes para los objetivos del proyecto, simplificando así el proceso de análisis y reduciendo la complejidad innecesaria.
+
+El schema personalizado se encuentra guardado en el archivo dtd, y su estructura incluye elementos como <score-partwise>, <part>, <measure>, <note>, <instrument-name>, entre otros.
+
+Este schema permite al parser validar la estructura del archivo MusicXML, asegurando que solo se procesen las etiquetas y atributos definidos, lo que facilita la detección de errores y la correcta navegación de la partitura.
+Gestión de Errores
+
+El parser incluye una gestión robusta de errores que cubre diversos aspectos:
+
+    Errores de Sintaxis XML:
+        Etiquetas mal formadas o sin cerrar.
+        Texto fuera de las etiquetas.
+        Etiquetas que no están correctamente anidadas.
+        Ausencia de una etiqueta principal que contenga todas las demás.
+
+    Errores Relacionados con el Schema:
+        Si las etiquetas encontradas no corresponden con lo esperado en el schema.
+        Uso incorrecto de atributos o estructuras no definidas en el DTD personalizado.
+
+Cuando se detecta un error, el parser proporciona mensajes claros indicando la naturaleza del problema y la línea donde ocurrió, facilitando la depuración y corrección del archivo MusicXML.
+Generación del Código de Salida
+
+Al finalizar el análisis, el parser genera un archivo de salida (result.txt) que contiene la información solicitada:
+
+    Número Total de Notas: Se muestra el total de notas presentes en la partitura.
+    Número de Notas por Instrumento: Para cada instrumento identificado en la partitura, se indica la cantidad de notas que interpreta.
+    Acordes Detectados por Compás: Se lista el acorde correspondiente a cada compás, basado en la detección realizada por el analizador de acordes.
+
+Este archivo proporciona una visión estructurada y clara de la partitura analizada, cumpliendo con los objetivos planteados en la práctica.
